@@ -15,6 +15,7 @@ graph TD;
     C -->|GitHub API| E[Log GitHub Issue];
     C -->|Slack API| F[Send Team Alert];
     D & E & F --> G[Agent Analyzes Response & Outputs Final State];
+```
 
 💻 Agent Execution Output (Smart Fallback)
 When tested with simulated environment variables, the agent successfully attempts the tool calls, recognizes the missing real credentials, and provides an intelligent fallback response:
