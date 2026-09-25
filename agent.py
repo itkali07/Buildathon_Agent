@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings("ignore")
+
 import os
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
@@ -112,19 +115,13 @@ agent_executor = create_react_agent(
 # 7. Run Agent
 # ==========================================
 if __name__ == "__main__":
-    print("\n" + "=" * 60)
-    print("AI SOFTWARE ENGINEER AGENT")
-    print("Groq + LangChain + Swytchcode")
-    print("=" * 60)
-
-    # Detailed prompt with dummy data so APIs don't reject the request
-    # Interactive prompt interface for judges
-    user_prompt = input("Enter your command for the AI Software Engineer: ")
+    import sys
+    sys.stdout.reconfigure(encoding='utf-8')
     
-    print("\nUser Intent:")
-    print(user_prompt)
-
-    print("\nRunning agent...\n")
+    if len(sys.argv) > 1:
+        user_prompt = sys.argv[1]
+    else:
+        user_prompt = input("Enter your command for the AI Software Engineer: ")
 
     try:
         response = agent_executor.invoke(
@@ -138,38 +135,14 @@ if __name__ == "__main__":
             }
         )
 
-        print("=" * 60)
-        print("AGENT EXECUTION OUTPUT")
-        print("=" * 60)
-
         messages = response.get("messages", [])
-        
+
         if messages:
             final_message = messages[-1]
-            
-            if hasattr(final_message, "content"):
-                final_output = final_message.content
-            else:
-                final_output = str(final_message)
-                
-            if isinstance(final_output, list):
-                text_parts = []
-                for item in final_output:
-                    if isinstance(item, dict):
-                        if "text" in item:
-                            text_parts.append(item["text"])
-                        else:
-                            text_parts.append(str(item))
-                    else:
-                        text_parts.append(str(item))
-                print("\n".join(text_parts))
-            else:
-                print(final_output)
-        else:
-            print(response)
+            print(final_message.content)
 
     except Exception as e:
-        print("\n" + "=" * 60)
-        print("ERROR")
-        print("=" * 60)
-        print(str(e))
+        print(f"Error: {e}")
+
+        
+    
