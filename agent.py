@@ -118,12 +118,8 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # Detailed prompt with dummy data so APIs don't reject the request
-    user_prompt = (
-        "Check high-priority issues. "
-        "Create a Jira bug for a database connection drop in project 'PROJ' at 'https://dummy.atlassian.net', "
-        "log it on GitHub under owner 'KaliAwasthi' and repo 'Buildathon-Agent', "
-        "and alert the team on Slack with token 'xoxb-12345-dummy'."
-    )
+    # Interactive prompt interface for judges
+    user_prompt = input("Enter your command for the AI Software Engineer: ")
     
     print("\nUser Intent:")
     print(user_prompt)
