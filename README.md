@@ -6,7 +6,6 @@ An intelligent, autonomous AI agent built for the Commudle Buildathon. Powered b
 * **Agentic Workflow:** Utilizes LangGraph's ReAct architecture for dynamic decision-making and tool execution.
 * **Swytchcode Integration:** Securely wrapped Swytchcode tools for creating Jira bugs, logging GitHub issues, and sending Slack alerts.
 * **Smart Error Handling & Reasoning:** Instead of crashing on API payload rejections (due to dummy testing data), the agent intelligently analyzes connection failures and generates a comprehensive, step-by-step developer debugging guide.
-
 ## 🏗️ Architecture Flow
 ```mermaid
 graph TD;
@@ -25,7 +24,7 @@ AGENT EXECUTION OUTPUT
 ### What to do next
 
 1. **Verify URLs & Tokens**
-   * Make sure the Jira base URL ('[https://dummy.atlassian.net](https://dummy.atlassian.net)') is correct.
+   * Make sure the Jira base URL ('https://dummy.atlassian.net') is correct.
    * Confirm the GitHub repo exists and your personal access token has 'repo' scope.
    * Ensure the Slack token ('xoxb-12345-dummy') is valid.
 
@@ -33,9 +32,9 @@ AGENT EXECUTION OUTPUT
    * (Agent provides automated curl commands for manual testing)
 
 3. **Review API Docs**
-   * Jira: [https://developer.atlassian.com/cloud/jira/](https://developer.atlassian.com/cloud/jira/)
-   * GitHub: [https://docs.github.com/en/rest/issues](https://docs.github.com/en/rest/issues)
-   * Slack: [https://api.slack.com/methods/chat.postMessage](https://api.slack.com/methods/chat.postMessage)
+   * Jira: https://developer.atlassian.com/cloud/jira/
+   * GitHub: https://docs.github.com/en/rest/issues
+   * Slack: https://api.slack.com/methods/chat.postMessage
 
 Once the endpoints and tokens are verified, the calls should succeed.
 
