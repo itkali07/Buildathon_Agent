@@ -1,6 +1,7 @@
 langchain
 langgraph
 langchain-groq
-swytchcode
 python-dotenv
 requests
+flask
+gunicorn

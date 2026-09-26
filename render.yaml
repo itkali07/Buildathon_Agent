@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: Buildathon_Agent
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn wsgi:app
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: SLACK_BOT_TOKEN
+        sync: false
+      - key: SLACK_CHANNEL_ID
+        value: C0C4HJK2PG9
+      - key: JIRA_BASE_URL
+        value: https://kaliawasthi63.atlassian.net
+      - key: JIRA_PROJECT_KEY
+        value: PROJ
+      - key: GITHUB_OWNER
+        value: itkali07
+      - key: GITHUB_REPO
+        value: Buildathon_Agent
