@@ -1,0 +1,7 @@
+{
+  "name": "AI Software Engineer Agent",
+  "description": "Autonomous AI agent powered by ReAct architecture for coordinating Jira bugs, GitHub issues, and Slack team alerts with smart error reasoning.",
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

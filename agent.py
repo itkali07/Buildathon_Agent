@@ -13,11 +13,20 @@ from swytchcode_runtime import Swytchcode
 # ==========================================
 load_dotenv()
 
-if not os.getenv("GROQ_API_KEY"):
+# Required Groq API Key
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+if not GROQ_API_KEY:
     raise ValueError(
-        "GROQ_API_KEY not found. Please add GROQ_API_KEY=your_key "
-        "in the .env file."
+        "GROQ_API_KEY not found. Please set GROQ_API_KEY in your environment or .env file."
     )
+
+# Configurable Service Settings (loaded from environment)
+GITHUB_OWNER = os.getenv("GITHUB_OWNER", "itkali07")
+GITHUB_REPO = os.getenv("GITHUB_REPO", "Buildathon_Agent")
+JIRA_BASE_URL = os.getenv("JIRA_BASE_URL", "https://kaliawasthi63.atlassian.net")
+JIRA_PROJECT_KEY = os.getenv("JIRA_PROJECT_KEY", "PROJ")
+SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN") or os.getenv("SLACK_TOKEN", "")
+SLACK_CHANNEL = os.getenv("SLACK_CHANNEL_ID") or os.getenv("SLACK_CHANNEL", "C0C4HJK2PG9")
 
 # ==========================================
 # 2. Initialize Swytchcode Runtime
@@ -29,10 +38,10 @@ swx = Swytchcode()
 # ==========================================
 @tool
 def github_create_issue(title: str, body_text: str) -> str:
-    """Creates an issue in the GitHub repository."""
+    """Creates an issue in the configured GitHub repository."""
     payload = {
-        "owner": "KaliAwasthi",
-        "repo": "Buildathon-Agent",
+        "owner": GITHUB_OWNER,
+        "repo": GITHUB_REPO,
         "body": {
             "title": title,
             "body": body_text
@@ -51,8 +60,8 @@ def github_create_issue(title: str, body_text: str) -> str:
 def jira_create_task(summary: str, description: str) -> str:
     """Creates a high priority bug tracking task in Jira."""
     payload = {
-        "baseUrl": "https://dummy.atlassian.net",
-        "projectKey": "PROJ",
+        "baseUrl": JIRA_BASE_URL,
+        "projectKey": JIRA_PROJECT_KEY,
         "body": {
             "summary": summary,
             "description": description
@@ -69,12 +78,15 @@ def jira_create_task(summary: str, description: str) -> str:
 
 @tool
 def slack_send_message(text: str) -> str:
-    """Sends notification message to a Slack channel."""
+    """Sends notification message to the configured Slack channel."""
+    if not SLACK_BOT_TOKEN:
+        return "Slack tool error: SLACK_BOT_TOKEN is not set in environment variables."
+
     payload = {
-        "token": "xoxb-12345-dummy-token",
+        "token": SLACK_BOT_TOKEN,
         "body": {
             "text": text,
-            "channel": "C0123456789"
+            "channel": SLACK_CHANNEL
         }
     }
     try:
@@ -96,10 +108,10 @@ tools = [
 ]
 
 # ==========================================
-# 5. Groq Model Setup (Fixed Model Name)
+# 5. Groq Model Setup
 # ==========================================
 llm = ChatGroq(
-    model="openai/gpt-oss-20b",
+    model=os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
     temperature=0
 )
 
@@ -143,6 +155,3 @@ if __name__ == "__main__":
 
     except Exception as e:
         print(f"Error: {e}")
-
-        
-    
